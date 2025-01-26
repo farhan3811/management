@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>.::Booking Online Pasien Lama KMU::.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{{ asset('img/faviconkmu.ico')}}" type="image/x-icon" />
+
+    <!-- CSS -->
+    <link href="{{ asset('booking-assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/jquery-ui-1.10.1.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/fontello/css/fontello.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/fontello/css/animation.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/weather.css')}}" rel="stylesheet">
+
+
+    <link href="{{ asset('vendors/bower_components/datepicker/datepicker.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Owl Carousel Assets -->
+    <link href="{{ asset('booking-assets/css/owl.carousel.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/owl.theme.css')}}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="http://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="http://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"><img src="{{ asset('img/logo.png')}}" alt=""></div>
+    </div>
+    <!--  end Preloader -->
+    <div id="wrapper">
+        <div id="main">
+    </br>
+    </br>
+            <div class="container">
+                <div id="logo"><img src="{{ asset('img/logo.png')}}" alt=""></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Booking Antrian</h1>
+                        <h2><strong> Klinik Mata Utama</strong> Tangerang Selatan</h2>
+                    </div>
+                </div>
+
+                <div id="lang">
+                    <ul>
+                        <li><a href="#" id="active">IDN</a></li>
+                        <li><a href="#">EN</a></li>
+                    </ul>
+                </div>
+
+                <div id="book">
+                    <form method="GET" data-toggle="validator" role="form" enctype="multipart/form-data" autocomplete="off">
+                        {{csrf_field()}} {{method_field('get')}}
+                        <div class=" row">
+                            <div class="col-md-2 col-sm-3 first-nogutter">
+                                <input type="text" class=" form-control" maxlength="6" id="id_generate_pasien" name="id_generate_pasien" placeholder="ID Rekam Medis"
+                                    @if(isset($pasien)) value="{{$pasienid}}" @endif required>
+                                <span class="input-icon"><i class="icon-user-3"></i></span>
+                            </div>
+
+                                           
+                                                                                       
+                            <div class="col-md-2 col-sm-3">
+                                <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+                                    <input id="tanggal_booking" class="form-control" name="tanggal_booking" value="" type="text" readonly  class="form-control" data-error="Anda Belum Memasukan Tanggal Lahir.." style="background-color:white" required/> 
+                                    <span class="input-group-addon "><i class="icon-calendar"></i></span>
+                                 </div>
+                            </div>
+
+
+                            <div class="col-md-3 col-sm-2 first-nogutter">
+                                <div class="styled-select">
+                                    <select name="pilih_poli" id="pilih_poli" class="form-control">
+									<option selected="selected">- Nama Poliklinik -</option>
+									 @foreach ($poli as $key=> $value)
+									    <option value="{{ $value->code_poliklinik }}">{{$value->nama_poliklinik}}</option>
+                                      @endforeach 
+								</select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-4 first-nogutter">
+                                <div class="styled-select">
+                                    <select name="pilih_dokter" id="pilih_dokter" class="form-control" required>
+									<option selected="selected" disabled>- Pilih Poliklinik Terlebih Dahulu -</option>
+								</select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 col-sm-4 first-nogutter">
+                                <div class="styled-select">
+                                    <select name="pilih_waktu" id="pilih_waktu" class="form-control" required>
+									<option selected="selected" disabled>- Pilih Dokter Terlebih Dahulu -</option>
+								</select>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-md-3 col-sm-4 first-nogutter">
+                                <div class="styled-select">
+                                    <select name="pilih_spesialis" id="pilih_spesialis" class="form-control" required>
+									<option selected="selected" disabled>- Menu Spesialisasi -</option>
+								</select>
+                                </div>
+                            </div>-->
+
+                 
+                            <div class="col-sm-12" style="text-align:center">Bagi Anda Pasien Lama KMU<strong> Anda Bisa Booking Secara Online Melalui Halaman ini</strong>.
+                            <button type="submit" class="btn-check" id="submit-check">BOOKING</button>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div id="message-booking">
+
+                        @if (isset($bpjs) and isset($pasien)or empty($bpjs) and isset($pasien))
+                        <div class="error_message" >
+						<h5> <i class="icon-info-circled "></i> Hasil Pengecekan : </h5> 
+					</div>
+				@endif
+				
+				@if (isset($info))
+				<div class="error_message ">
+                    {{$info}}
+                </div>
+                    <?php /*@if($tambah)
+                        <a href="{{url('admin/front_bookingklinik')}}">
+				            Tambahkan ke poli
+				        </a> 
+                    @endif */ ?>
+                @endif
+
+                    </div>
+                </div>
+                <!-- End book -->
+
+            </div>
+            <!-- End container -->
+
+
+
+            <div class="text-right col-md-12" style="text-align:right;top:130px">
+                <span>Anda belum memiliki ID Rekam Medis? </br><b>Daftarkan diri anda</b> dengan mengklik tombol di bawah ini
+                </br><a href="{{url('/registration')}}"><button class="btn btn-primary">Daftar Pasien Baru</button></a>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="#" id="modal-about-open">Tentang</a></li>
+                    <li><a href="#" id="modal-weather-open">Jadwal Dokter</a></li>
+                    <li><a href="#" id="modal-contacts-open">Lokasi Kami</a></li>
+                </ul>
+                <ul id="contact_follow">
+                    <li><a href="#"><span class="icon-facebook"></span></a></li>
+                    <li><a href="#"><span class="icon-twitter"></span></a></li>
+                    <li><a href="#"><span class=" icon-googleplus"></span></a></li>
+                </ul>
+            </nav>
+
+        </div>
+        <!-- End main -->
+
+        <!-- Modal Notified -->
+        <div id="modal-about">
+            <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a>
+
+
+        </div>
+        <!-- End conainer -->
+    </div>
+    <!-- End modal -->
+
+    <!-- Modal  Weather -->
+    <div id="modal-weather">
+        <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 style="margin-top:30px">JADWAL DOKTER</h3>
+                    <table class="table" style="margin-bottom:60px;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Poli</th>
+                                <th>Nama Dokter</th>
+                                <th>Hari Praktek</th>
+                                <th>Jam Praktek</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                $no = 1;
+                                ?>
+                                <?php /*@foreach($jadwalpraktik as $getjadwal)
+                                    <tr>
+                                        <td>{{$no++}}</td>
+                                        <td>{{$getjadwal->kedokter->kepoli->nama_poliklinik}}</td>
+                                        <td>{{$getjadwal->kedokter->nama_dokter}}</td>
+                                        <td>{{$getjadwal->hari_praktek}}</td>
+                                        <td>{{$getjadwal->jam_praktek}}</td>
+                                    </tr>
+                                @endforeach */ 
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            Ket : Jadwal Dokter Sewaktu-waktu bisa berubah.
+            <hr>
+        </div>
+        <!-- End conainer -->
+    </div>
+    <!-- End modal -->
+
+
+    <!-- Modal  Contacts -->
+    <div id="modal-contacts">
+        <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a>
+
+
+    </div>
+    <!-- End modal -->
+
+
+    </div>
+    <!-- End wrapper -->
+
+    <div id="slides">
+        <ul class="slides-container">
+            <li><img src="{{ asset('img/slide_1.jpg')}}" alt=""></li>
+            <li><img src="{{ asset('img/slide_2.jpg')}}" alt=""></li>
+            <li><img src="{{ asset('img/slide_3.jpg')}}" alt=""></li>
+            <li><img src="{{ asset('img/slide_4.jpg')}}" alt=""></li>
+        </ul>
+    </div>
+    <!-- End background slider -->
+
+
+
+    <!-- Assets & GET DATA DOKTER BY POLI -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+    <!-- JQUERY -->
+    <script src="{{ asset('booking-assets/js/jquery-1.10.2.min.js')}}"></script>
+    <script src="{{ asset('booking-assets/js/jquery-ui-1.10.1.min.js')}}"></script>
+    <!--<script src="{{ asset('booking-assets/js/calendar_func_single_month_view.js')}}"></script>-->
+    <script src="{{ asset('booking-assets/js/jquery.easing.1.3.min.js')}}"></script>
+    <script src="{{ asset('booking-assets/js/jquery.superslides.min.js')}}"></script>
+    <script type="text/javascript">
+        $('#slides').superslides({
+            play: 6000,
+            pagination: false,
+            animation_speed: 800,
+            animation: 'fade'
+        });
+    </script>
+<script src="{{ asset('vendors/bower_components/datepicker/bootstrap-datepicker.js')}}"></script>
+
+    <!-- Function Datepicker -->
+    <script>
+    $(function () {
+    $("#datepicker").datepicker({ 
+    autoclose: true, 
+    todayHighlight: true
+    }).datepicker('update', new Date());
+    });
+    </script>
+    <!-- OTHER JS -->
+    <script src="{{ asset('booking-assets/js/retina.min.js')}}"></script>
+    <script src="{{ asset('booking-assets/js/jquery.placeholder.min.js')}}"></script>
+    <script src="{{ asset('booking-assets/js/functions.js')}}"></script>
+    <script src="{{ asset('booking-assets/assets/validate.js')}}"></script>
+
+    <!-- CAROUSEL -->
+    <script src="{{ asset('booking-assets/js/owl.carousel.min.js')}}"></script>
+    <script>
+        //Carousel
+        $(document).ready(function () {
+            "use strict";
+            //Carousel
+            $(".carousel").owlCarousel({
+                items: 1,
+                singleItem: true,
+                responsive: true,
+                autoHeight: true,
+                transitionStyle: "fade"
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

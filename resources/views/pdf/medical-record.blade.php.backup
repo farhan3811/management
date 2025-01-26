@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rekam Medis Pasien #{{$patient->id_rekam_medis}}</title>
+
+    <style>
+        .position-temp{
+            width:40% !important;
+        }
+        .left-position{
+            padding-left:20px !important;
+        }
+        .pull-right {
+            float: right !important;
+        }
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+        .table-striped-new > tbody > tr:nth-of-type(odd) {
+            background-color: #e9f2ff !important;
+        }
+        .table-striped-new > tbody > tr:nth-of-type(even) {
+            background-color: #f7f7f7 !important;
+        }
+        .table-striped-new tbody tr td, .table tbody tr th {
+            padding: 8px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .bg-light-blue {
+            background-color: #03A9F4 !important;
+            color: #fff;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+    <div id="identity">
+        <h2>Identitas Pasien</h2>
+
+        <table class="table table-striped-new table-hover table-condensed">
+            <tbody>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Nama Lengkap</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->nama_pasien}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Nomor Rekam Medis</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->id_rekam_medis}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Tanggal Lahir</b></span>
+                    </td>
+                    <td class="left-position">{{date('l, d M Y', strtotime($patient->tanggal_lahir)) }}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Jenis Kelamin</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->jenis_kelamin == 'L'? 'Laki-laki' : $patient->jenis_kelamin == 'P'? 'Perempuan' : 'Tidak Diketahui/Belum Diinput' }}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Alamat Rumah</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->alamat}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Email Aktif</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->email == null ? '-' : $patient->email}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Telepon Rumah</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->telepon}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Handphone</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->handphone == null ? '-' : $patient->handphone}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-striped-new table-hover table-condensed">
+            <tbody>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Negara</b></span>
+                    </td>
+                    <td class="left-position">{{isset($patient->toCountries->name)? $patient->toCountries->name : '-'}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Provinsi</b></span>
+                    </td>
+                    <td class="left-position">{{isset($patient->toProvinces->name)? $patient->toProvinces->name : '-'}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Kota</b></span>
+                    </td>
+                    <td class="left-position">{{isset($patient->toRegencies->name)? $patient->toRegencies->name : '-'}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Kecamatan</b></span>
+                    </td>
+                    <td class="left-position">{{isset($patient->toDistricts->name)? $patient->toDistricts->name : '-'}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Kelurahan</b></span>
+                    </td>
+                    <td class="left-position">{{isset($patient->toVillages->name)? $patient->toVillages->name : '-'}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Kodepos</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->kodepos == null ? '-' : $patient->kodepos}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-striped-new table-hover table-condensed">
+            <tbody>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Golongan Darah</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->gol_darah}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Riwayat Penyakit</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->riwayat_penyakit}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Nama Wali</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->nama_wali}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Hubungan Wali</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->hubungan_wali}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>No Telp Wali</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->nomor_telepon_wali}}</td>
+                </tr>
+                <tr>
+                    <td class="position-temp">
+                        <span class="pull-right"><b>Email Wali</b></span>
+                    </td>
+                    <td class="left-position">{{$patient->email_wali == null ? '-' : $patient->email_wali}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div id="pemeriksaan">
+        @foreach($bookings as $booking)
+            <h2>Pemeriksaan Pada Tanggal {{date('d M Y', strtotime($booking->booking_tanggal))}}</h2>
+            
+            <h3>Pemeriksaan Visus</h3>
+            <table class="table table-hover table-condensed table-bordered">
+                <tbody>
+                    <tr>
+                        <td style="width:50%;text-align:center" class="bg-light-blue"><span><b>Visus Mata Kanan</span></b></td>
+                        <td style="width:50%;text-align:center" class="bg-light-blue"><span><b>Visus Mata Kiri</span></b></td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%;text-align:center">{{ $booking['toQueueVisus']['toVisus']['visus_mata_kanan'] }}</td>
+                        <td style="width:50%;text-align:center">{{ $booking['toQueueVisus']['toVisus']['visus_mata_kiri'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-hover table-condensed table-striped-new">
+                <tbody>
+                    <tr>
+                        <td style="width:50%"><span class="pull-right"><b>Segment Anterior</span></b></td>
+                        <td>{{ $booking['toQueueVisus']['toVisus']['segment_anterior'] }}</td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%"><span class="pull-right"><b>Segment Posterior</span></b></td>
+                        <td>{{ $booking['toQueueVisus']['toVisus']['segment_posterior'] }}</td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%"><span  class="pull-right" ><b>Penglihatan Warna</span></b></td>
+                        <td>{{ $booking['toQueueVisus']['toVisus']['penglihatan_warna'] }}</td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%"><span  class="pull-right" ><b>Keterangan</span></b></td>
+                        <td>{{ $booking['toQueueVisus']['toVisus']['keterangan'] }}</td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%"><span  class="pull-right" ><b>Saran</span></b></td>
+                        <td>{{ $booking['toQueueVisus']['toVisus']['saran'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @if(count($booking['toQueueGlasses']['toVisusGlasses']['toVisusGlassesReceipt']) != 0)
+                <h3>Pemeriksaan Kacamata</h3>
+                <table class="table table-bordered table-hover" id="glasses-table-data">
+                    <thead>
+                        <tr>
+                            <th align="center" class="bg-light-blue" style="width:500px !important;padding:5px;"><div style="width:100px"></div></th>
+                            @foreach($booking['toQueueGlasses']['toVisusGlasses']['toVisusGlassesReceipt'] as $col1)
+                                <th align="center" class="bg-light-blue" style="text-align:center;width:500px !important;padding-top:10px;padding-bottom:10px;padding-left:5px;padding-right:5px;vertical-align:middle;">
+                                    <div  style="width:90px">
+                                        <b> {{$col1['toGlassesHeader']->header}} </b>
+                                    </div>
+                                </th>
+                            @endforeach
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($booking['toQueueGlasses']['toVisusGlasses']['sider'] as $col2)
+                        <tr>
+                            <td align="center" class="bg-light-blue" style="width:500px !important;padding:5px;"><b>{{$col2->sider}}</b></td>
+                            @foreach($booking['toQueueGlasses']['toVisusGlasses']['toVisusGlassesReceipt'] as $col1)
+                                <td>
+                                    <input disabled class="form-control receipt" style=""  value="<?= isset($result['glasses_receipt'][$col2->code_sider][$col1->code_header])? $result['glasses_receipt'][$col2->code_sider][$col1->code_header] : ''; ?>"
+                                        type="text">
+                                </td>
+                            @endforeach
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        @endforeach
+    </div>
+</body>
+</html>

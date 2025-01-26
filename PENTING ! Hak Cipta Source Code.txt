@@ -1,0 +1,24 @@
+source code secara normatif berdasarkan Peraturan Pemerintah Nomor 82 Tahun 2012 tentang Penyelenggaraan Sistem dan Transaksi Elektronik (“PP PSTE”).
+ Source code atau kode sumber berdasarkan penjelasan Pasal 8 ayat (1) PP PSTE didefinisikan sebagai berikut:
+
+“Suatu rangkaian perintah, pernyataan, dan/atau deklarasi yang ditulis dalam bahasa pemrograman komputer yang dapat dibaca dan dipahami orang.”
+
+Source code berisi sekumpulan instruksi komputer yang biasanya berbentuk teks yang berfungsi memberi perintah kerja komputer atau suatu perangkat untuk menjalankan fungsi tertentu.
+
+Source code termasuk dalam program komputer. Berdasarkan Pasal 40 ayat (1) huruf s Undang-Undang Nomor 28 Tahun 2014 tentang Hak Cipta (“UU Hak Cipta”), program komputer juga termasuk ke dalam ciptaan yang dilindungi.
+Hak cipta source code yang dibuat oleh programmer dan pada dasarnya adalah milik penciptanya (programmer itu sendiri). Namun demikian, jika terdapat perjanjian yang menyebut bahwa programmer akan menyerahkan hak tersebut kepada perusahaan, maka perusahaan atau Anda berhak sebagai Pemegang Hak Cipta atas source code tersebut.
+
+Namun, jika tidak ada perjanjian sebagaimana dimaksud, maka Developer secara hukum dianggap sebagai pencipta dan pemegang hak cipta. Dasarnya adalah Pasal 36 UU Hak Cipta yang berbunyi:
+
+“Kecuali diperjanjikan lain, Pencipta dan Pemegang Hak Cipta atas Ciptaan yang dibuat dalam hubungan kerja atau berdasarkan pesanan yaitu pihak yang membuat Ciptaan.”
+
+Meskipun tidak bersifat wajib dicatatkan, mengingat rentannya source code untuk diduplikasi, ada baiknya jika pencipta atau pemegang hak cipta source code mencatatkannya ke Direktorat Jenderal Kekayaan Intelektual Kementerian Hukum dan Hak Asasi Manusia atas karyanya tersebut. Source code wajib diberikan ketika akan melakukan pencatatan hak cipta berupa program komputer. Dengan demikian, dalam hal terjadi sengketa di pengadilan, bukti ciptaan terdaftar dapat digunakan sebagai dasar pembuktian kepemilikan hak cipta tersebut.
+
+Penegasan atas perlindungan karya intelektual (termasuk source code) juga tercantum dalam Pasal 25 Undang-Undang Nomor 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik (“UU ITE”) sebagaimana yang telah diubah oleh Undang-Undang Nomor 19 Tahun 2016 tentang Perubahan Atas Undang-Undang Nomor 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik (“UU 19/2016”) yang menyebutkan bahwa:
+
+ “Informasi Elektronik dan/atau Dokumen Elektronik yang disusun menjadi karya intelektual, situs internet, dan karya intelektual yang ada di dalamnya dilindungi sebagai Hak Kekayaan Intelektual berdasarkan ketentuan Peraturan Perundang-undangan.”
+
+Kedua undang-undang tersebut dapat menjadi dasar hukum atas perlindungan hak cipta atas source code tersebut disamping perjanjian yang telah disepakati antara Anda dengan programmer dan developer Anda.
+Terkait antisipasi perlindungan source code di lingkungan internal perusahaan, dalam konteks legal kami menyarankan agar Anda sebagai pemilik perusahaan membuat Non-Disclosure Agreement (“NDA”) atau perjanjian yang mengatur pembatasan bahkan larangan bagi karyawan Anda untuk men-disclose informasi penting milik perusahaan (termasuk source code). Atau setidaknya, dalam perjanjian kerja antara Anda dan karyawan Anda, disebutkan klausul kewajiban karyawan untuk merahasiakan semua informasi penting milik perusahaan termasuk didalamnya informasi/dokumentasi tentang source code. 
+
+Jika web atau software yang Anda buat bersifat spesifik atau unik pada bidang tertentu, Anda dapat juga membuat Non-Competition Agreement (“NCA”), yakni kesepakatan bersama antara Anda dan programmer atau Developer  Anda yang menyebutkan klausul bahwa  tidak akan memanfaatkan informasi penting milik Anda dan Developer kepada orang lain untuk menjadi pesaing Anda dibidang yang sama dikemudian hari selama jangka waktu tertentu yang disepakati.

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>{{$datapasien->generated_id}} - {{$datapasien->nama_pasien}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='author' content='Dani Gunawan, danigunawan.elektroug@gmail.com'>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{{ asset('booking-assets/img/faviconkmu.ico')}}" type="image/x-icon" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="{{ asset('booking-assets/img/apple-touch-icon-57x57-precomposed.png')}}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="{{ asset('booking-assets/apple-touch-icon-72x72-precomposed.png')}}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="{{ asset('booking-assets/apple-touch-icon-114x114-precomposed.png')}}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="{{ asset('booking-assets/apple-touch-icon-144x144-precomposed.png')}}">
+
+    <!-- CSS -->
+    <link href="{{ asset('booking-assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/jquery-ui-1.10.1.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/fontello/css/fontello.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/fontello/css/animation.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/weather.css')}}" rel="stylesheet">
+
+    <!-- Owl Carousel Assets -->
+    <link href="{{ asset('booking-assets/css/owl.carousel.css')}}" rel="stylesheet">
+    <link href="{{ asset('booking-assets/css/owl.theme.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"><a href="{{('/')}}"><img src="{{ asset('booking-assets/img/logo.png')}}" alt=""></a></div>
+    </div>
+    <!--  end Preloader -->
+
+    <div id="wrapper">
+        <div id="main">
+            <div class="container">
+                <div id="logo"><a href="{{('/')}}"><img src="{{ asset('booking-assets/img/logo.png')}}" alt=""></a></div>
+
+                <div id="lang">
+                    <ul>
+                        <li><a href="#" id="active">IDN</a></li>
+                        <li><a href="#">EN</a></li>
+                    </ul>
+                </div>
+
+                <form method="POST" action="{{url('booking/store')}}" data-toggle="validator" role="form" enctype="multipart/form-data"
+                    autocomplete="off">
+                    {{csrf_field()}} {{method_field('post')}}
+
+                    <div class="col-md-3 col-sm-3 first-nogutter">
+                        <?php /*<input type="hidden" id="id_bpjs_selesai" name="id_bpjs_selesai" value="{{$id_bpjs}}"> */ ?>
+
+                        <input type="hidden" id="id_generate_pasien_selesai" name="id_generate_pasien_selesai" value="{{$datapasien->id_rekam_medis}}">
+                        <input type="hidden" id="pilih_dokter_selesai" name="pilih_dokter_selesai" value="{{$dokter->code_docter}}">
+                        <input type="hidden" id="pilih_tanggal_booking_selesai" name="pilih_tanggal_booking_selesai" value="{{$bookingdate}}">
+                        <input type="hidden" name="code_waktu" value="{{$codewaktu}}">
+                        <div class="ll-skin-latoja"></div>
+                    </div>
+
+                    <h3>{{$dokter->toPoliklinik->nama_poliklinik}}</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="error_message">
+                                <h5> <i class="icon-info-circled"></i> {{$info}}</h5>
+                            </div>
+                            <hr>
+                            <div class="photo_polaroid">
+                                <div class="carousel">
+                                    <div class="item"><img src="{{$poliklinikImage}}" alt="" class="img-responsive"></div>
+                                </div>
+                                <!-- End carousel -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Anda Booking Pada : <strong><?php echo date("Y/m/d h:i:s"); ?></strong><span> Terima Kasih..</span></h4>
+                            <p class="text-center">
+                                {{$dokter->toPoliklinik->nama_poliklinik}}
+                            </p>
+                            <h5><i class="icon-medkit"></i> Informasi Data Pasien</h5>
+                            <ul class="rooms_info">
+                                <li><i class="icon-sort-number-up"></i>#No Rekam Medis : {{$datapasien->generated_id}} </li><br>
+                                <li><i class="icon-lodging"></i>Nama Pasien : {{$datapasien->nama_pasien}} </li><br>
+                                <li><i class="icon-ok-4"></i>Status Pasien : @if ($datapasien->status_pasien == '1') Sudah Validasi
+                                    Rekam Medis/Aktif @else ($datapasien->status_pasien == '0') Belum Validasi  (Silahkan Ke Bag. Pelayanan Untuk Aktivasi) @endif
+
+                                </li> <br>
+                            </ul>
+                            <h5><i class="icon-ambulance"></i> Informasi Data Booking</h5>
+                            <ul class="rooms_info">
+                                <li><i class="icon-user-md"></i>Nama Dokter : {{$dokter->nama_dokter}} </li><br>
+                                <li><i class="icon-stethoscope"></i>Nama Poli : {{$dokter->toPoliklinik->nama_poliklinik}} </li><br>
+                                <li><i class="icon-hospital"></i>Tanggal Booking : {{$bookingdate}} </li> <br>
+                                <li><i class="icon-back-in-time"></i>Hari Praktek : {{$hari}}</li> <br>
+                                <li><i class="icon-clock"></i>Jam Praktek : {{$waktu->time_start.' - '.$waktu->time_end}}  </li> <br>
+                            </ul>
+                            <p><button type="submit" class="btn-check" id="submit-check">BOOKING</button></p>
+                        </div>
+                    </div>
+                    <!-- End row -->
+                    <hr>
+                </form>
+
+                @if (isset($bpjs) and isset($pasien)or empty($bpjs) and isset($pasien))
+
+                <p> Hasil Pengecekan : </p>
+
+                @endif @if (isset($bpjs) and isset($pasien) or empty($bpjs) and isset($pasien)) {{$info}} @if($tambah)
+                <a href="{{url('admin/front_bookingklinik')}}">
+				Tambahkan ke poli
+				</a> @endif @endif
+
+            </div>
+            <!-- End book -->
+            <nav>
+                <ul class="menu">
+                    <li><a href="#" id="modal-rooms-open">Pelayanan dan Tindakan</a></li>
+                    <li><a href="#" id="modal-about-open">Tentang Kami</a></li>
+                    <li><a href="#" id="modal-weather-open">Jadwal Dokter</a></li>
+                    <li><a href="#" id="modal-contacts-open">Lokasi Kami</a></li>
+                </ul>
+                <ul id="contact_follow">
+                    <li><a href="#"><span class="icon-facebook"></span></a></li>
+                    <li><a href="#"><span class="icon-twitter"></span></a></li>
+                    <li><a href="#"><span class=" icon-googleplus"></span></a></li>
+                </ul>
+            </nav>
+
+        </div>
+        <!-- End main -->
+
+        <!-- Modal Latest ROOMS -->
+        <div id="modal-offers">
+            <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a>
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h3>Pelayanan dan Tindakan</h3>
+                        @if(isset($dokter->toPoliklinik))
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="photo_polaroid">
+                                    <div class="carousel">
+                                        <div class="item"><img src="{{ asset('images/foto_poli')}}/{{$dokter->toPoliklinik->gambar_poliklinik}}"
+                                                alt="" class="img-responsive"></div>
+                                    </div>
+                                    <!-- End carousel -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="error_message"></div>
+
+                                <h4>{{$dokter->toPoliklinik->nama_poliklinik}}</h4>
+                                <p class="text-center">
+                                    {{$dokter->toPoliklinik->deskripsi_poliklinik}}
+                                </p>
+                                <ul class="rooms_info">
+                                    <li><i class="icon-lodging"></i>Fasilitasi 1 :</li><br>
+                                    <li><i class="icon-wifi"></i>Fasilitas 2 :</li> <br>
+                                    <li><i class="icon-air"></i>Fasilitasi 3 :</li><br>
+                                </ul>
+                                <p><a href="#" class="modal-close booking">Pesan Sekarang</a></p>
+                            </div>
+                        </div>
+                        <!-- End row -->
+                        <hr> @endif
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <h3 style="margin-top:30px">TINDAKAN</h3>
+                                <table class="table" style="margin-bottom:60px;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Tindakan</th>
+                                            <th>Jenis Tindakan</th>
+                                            <th>Prioritas Tindakan</th>
+                                            <th>Deskripsi Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                    $no = 1;
+                    ?>
+                                        <?php /*                    @foreach($tindakan as $gettindakan)
+                    <tr>
+                        <td>{{$no++}}</td>
+                        <td>{{$gettindakan->nama_tindakan}}</td>
+                        <td>{{$gettindakan->jenis_tindakan}}</td>
+                        <td>{{$gettindakan->prioritas_tindakan}}</td>
+                        <td>{{$gettindakan->keterangan}}</td>
+                    </tr>
+                    @endforeach */ ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- End col-md-12 -->
+
+                </div>
+                <!-- End row -->
+            </div>
+            <!-- End conainer -->
+        </div>
+        <!-- End modal -->
+
+        <!-- Modal Notified -->
+        <div id="modal-about">
+            <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a> Maintenance...
+        </div>
+        <!-- End conainer -->
+    </div>
+    <!-- End modal -->
+
+    <!-- Modal  Weather -->
+    <div id="modal-weather">
+        <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h3 style="margin-top:30px">JADWAL DOKTER</h3>
+                    <table class="table" style="margin-bottom:60px;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Poli</th>
+                                <th>Nama Dokter</th>
+                                <th>Hari Praktek</th>
+                                <th>Jam Praktek</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                    $no = 1;
+                    ?>
+                            <?php /*      @foreach($jadwalpraktik as $getjadwal)
+                    <tr>
+                        <td>{{$no++}}</td>
+                        <td>{{$getjadwal->kedokter->kepoli->nama_poliklinik}}</td>
+                        <td>{{$getjadwal->kedokter->nama_dokter}}</td>
+                        <td>{{$getjadwal->hari_praktek}}</td>
+                        <td>{{$getjadwal->jam_praktek}}</td>
+                        
+                     
+                    </tr>
+                    @endforeach */ ?>
+
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+            Ket : Jadwal Dokter Sewaktu-waktu bisa berubah.
+            <hr>
+
+            <!--<div class="row">
+            
+				<div class="col-md-10 col-md-offset-1">
+					<h3>JUMLAH PASIEN DAN ANTRIAN REALTIME</h3>
+					<p class=" lead text-center">
+						Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+					</p>
+					<div id="weather" class="clearfix"></div>
+				</div>
+
+
+			</div>
+			-->
+            <!-- End row -->
+
+        </div>
+        <!-- End conainer -->
+    </div>
+    <!-- End modal -->
+
+
+    <!-- Modal  Contacts -->
+    <div id="modal-contacts">
+        <a href="#" class="modal-close"><i class=" icon-cancel-circled-outline"></i></a>
+        <!--<div class="container">
+        
+			<div class="row">
+            
+				<div class="col-md-12">
+					<h3>Contacts</h3>
+					<div id="map"></div>
+					<hr>
+				</div>
+			</div>
+            
+			<div class="row">
+            
+				<div class="col-md-4">
+					<h4>From the airport <i class=" icon-flight-1 pull-right"></i></h4>
+					<ul class="list">
+						<li>Vix in error iuvaret, at omnium prompta aliquam vel. Sea an purto vide posidonium, eos modus dicit ne.</li>
+						<li>Appetere dignissim vis et. Te per dolore expetenda voluptaria, an eam autem perfecto patrioque.</li>
+					</ul>
+				</div>
+                
+				<div class="col-md-4">
+					<h4>From the station <i class=" icon-rail pull-right"></i></h4>
+					<ul class="list">
+						<li>Vix in error iuvaret, at omnium prompta aliquam vel. Sea an purto vide posidonium, eos modus dicit ne.</li>
+						<li>Appetere dignissim vis et. Te per dolore expetenda voluptaria, an eam autem perfecto patrioque.</li>
+					</ul>
+				</div>
+                
+				<div class="col-md-4">
+					<h4>By car <i class="icon-road pull-right"></i></h4>
+					<ul class="list">
+						<li>Vix in error iuvaret, at omnium prompta aliquam vel. Sea an purto vide posidonium, eos modus dicit ne.</li>
+						<li>Appetere dignissim vis et. Te per dolore expetenda voluptaria, an eam autem perfecto patrioque.</li>
+					</ul>
+				</div>
+			</div>
+            
+			<div class="row">
+				<div class="col-md-12">
+					<ul id="contact_info">
+						<li><strong>Address</strong> Street Number & Name - Postal Code 2034 BXU</li>
+						<li><strong>Telephone</strong> +353 1 234 566 78 / +353 1 234 566 78</li>
+						<li><a href="#">info@emailaddress.com</a> - <a href="#">www.rajonet.com</a></li>
+					</ul>
+				</div>
+			</div>
+            
+		</div> -->
+
+        Maintenance...
+
+    </div>
+    <!-- End modal -->
+
+
+    </div>
+    <!-- End wrapper -->
+
+    <div id="slides">
+        <ul class="slides-container">
+            <li><img src="{{ asset( 'booking-assets/img/slide_1.jpg')}}" alt=""></li>
+            <li><img src="{{ asset( 'booking-assets/img/slide_2.jpg')}}" alt=""></li>
+            <li><img src="{{ asset( 'booking-assets/img/slide_3.jpg')}}" alt=""></li>
+            <li><img src="{{ asset( 'booking-assets/img/slide_4.jpg')}}" alt=""></li>
+        </ul>
+    </div>
+    <!-- End background slider -->
+
+
+
+    <!-- Assets & GET DATA DOKTER BY POLI -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="{{asset( 'js/getpoli_frontbooking.js')}}"></script>
+
+    <!-- JQUERY -->
+    <script src="{{ asset( 'booking-assets/js/jquery-1.10.2.min.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/js/jquery-ui-1.10.1.min.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/js/calendar_func.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/js/jquery.easing.1.3.min.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/js/jquery.superslides.min.js')}}"></script>
+    <script type="text/javascript">
+        $('#slides').superslides({
+            play: 6000,
+            pagination: false,
+            animation_speed: 800,
+            animation: 'fade'
+        });
+    </script>
+
+    <!-- OTHER JS -->
+    <script src="{{ asset( 'booking-assets/js/retina.min.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/js/jquery.placeholder.min.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/js/functions.js')}}"></script>
+    <script src="{{ asset( 'booking-assets/assets/validate.js')}}"></script>
+
+    <!-- CAROUSEL -->
+    <script src="{{ asset( 'booking-assets/js/owl.carousel.min.js')}}"></script>
+    <script>
+        //Carousel
+        $(document).ready(function () {
+            "use strict";
+            //Carousel
+            $(".carousel").owlCarousel({
+                items: 1,
+                singleItem: true,
+                responsive: true,
+                autoHeight: true,
+                transitionStyle: "fade"
+            });
+        });
+    </script>
+
+    <!-- GOOGLE MAP -->
+    <!--  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="{{ asset( 'booking-assets/js/mapmarker.jquery.js')}}"></script> -->
+
+    <script src="{{ asset( 'booking-assets/js/jquery.simpleWeather.min.js')}}"></script>
+    <script>
+        // v3.1.0
+        //Docs at http://simpleweatherjs.com
+        $(document).ready(function () {
+            $.simpleWeather({
+                location: 'Jakarta, Indonesia',
+                woeid: '',
+                unit: 'c',
+                success: function (weather) {
+                    html = '<h4><i class="weathericon- ' + weather.code + '"></i> ' + weather.temp +
+                        '&deg;' + weather.units.temp + '</h4>';
+                    html += '<ul><li>' + weather.city + ', ' + weather.region + '</li>';
+                    html += '<li class="currently">' + weather.currently + '</li>';
+                    html += '<li>' + weather.wind.direction + ' ' + weather.wind.speed + ' ' +
+                        weather.units.speed + '</li></ul>';
+
+                    for (var i = 0; i < weather.forecast.length; i++) {
+                        html += '<span class="details_forecast">' + weather.forecast[i].day + ': ' +
+                            weather.forecast[i].high + '</span>';
+                    }
+
+                    $("#weather").html(html);
+                },
+                error: function (error) {
+                    $("#weather").html('<p>' + error + '</p>');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
